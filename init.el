@@ -13,10 +13,6 @@
 (setq org-todo-keywords
       '((sequence "TODO" "FEEDBACK" "|" "DONE" "CANCELLED")))
 
-;;Require git
-
-(require 'git)
-
 ;;Remove mess from the top of the screen
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -71,6 +67,7 @@ eyes are weary."
 
 ;;f7 is made for spell checking, and that's just what it'll do
 (global-set-key [f7] 'ispell)
+(setq ispell-dictionary "british")
 
 ;;Stuff for windows (only)
 (when (eq system-type 'windows-nt)
