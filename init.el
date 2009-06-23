@@ -13,6 +13,9 @@
 (setq org-todo-keywords
       '((sequence "TODO" "FEEDBACK" "|" "DONE" "CANCELLED")))
 
+;;Word wrap toggling
+(global-set-key [f9] 'toggle-truncate-lines)
+
 ;;Remove mess from the top of the screen
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
