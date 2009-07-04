@@ -10,8 +10,38 @@
 (setq org-hide-leading-stars t)
 (setq org-odd-levels-only t)
 
-(setq org-todo-keywords
-      '((sequence "TODO" "FEEDBACK" "|" "DONE" "CANCELLED")))
+(setq org-todo-keywords (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
+ (sequence "WAITING(w@/!)" "|" "CANCELLED(c@/!)"))))
+
+(setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
+
+(setq org-use-fast-todo-selection t)
+
+;;;  Load Org Remember Stuff
+(add-to-list 'load-path "~/lisp/remember")
+(org-remember-insinuate)
+
+;; I use C-M-r to start org-remember
+(global-set-key (kbd "C-M-r") 'org-remember)
+
+;; C-c C-c stores the note immediately
+(setq org-remember-store-without-prompt t)
+
+;; I don't use this -- but set it in case I forget to specify a location in a future template
+(setq org-remember-default-headline "Tasks")
+
+;; 3 remember templates for TODO tasks, Notes, and Phone calls
+(setq org-remember-templates (quote (("todo" ?t "* TODO %?
+  %u
+  %a" "~/org/tasks.org" bottom nil)
+                                     ("note" ?n "* %?                                        :NOTE:
+  %u
+  %a" nil bottom nil)
+                                     ("phone" ?p "* PHONE %:name - %:company -                :PHONE:
+  Contact Info: %a
+  %u
+  :CLOCK-IN:
+  %?" "~/org/phone.org" bottom nil))))
 
 ;;Word wrap toggling
 (global-set-key [f9] 'toggle-truncate-lines)
@@ -74,12 +104,6 @@ eyes are weary."
 
 ;;Stuff for windows (only)
 (when (eq system-type 'windows-nt)
-  ;;Default working directory
-  (if (file-accessible-directory-p "C:\\Documents and Settings\\JCornwall\\My Documents\\Notes\\")
-      (cd "C:\\Documents and Settings\\JCornwall\\My Documents\\Notes\\" )
-    (cd "C:\\Users\\Jason\\Documents\\Notes\\" ) 
-    )
-  
   ;;Printing via Ghost Script
   (setenv "GS_LIB" "C:\\Program Files\\GS\\gs8.64\\lib;C:\\Program Files\\GS\\gs8.64\\fonts")
   (setq ps-lpr-command "C:\\Program Files\\gs\\gs8.64\\bin\\gswin32c.exe")
