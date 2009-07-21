@@ -1,9 +1,14 @@
+;;Auto save drives me crazy
+(setq auto-save-interval '0)
+
 ;;Org-Mode
 (add-to-list 'load-path "~/lisp/org")
+(load "~/lisp/org/org.el")
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key [f8] 'org-feed-update-all)
 
 (add-hook 'org-mode-hook 'turn-on-font-lock)  ; Org buffers only
 
@@ -16,6 +21,17 @@
 (setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
 
 (setq org-use-fast-todo-selection t)
+
+(setq org-enforce-todo-dependencies t)
+
+(setq org-feed-alist
+      '(("ReQall"
+	 "http://www.reqall.com/user/feeds/rss/3b5e4c0dae44c665b26d206bddbdc67e956150b2"
+	 "~/org/feeds.org" "ReQall Entries")))
+
+;;IDO mode thing
+(require 'ido)
+(ido-mode t)
 
 ;;;  Load Org Remember Stuff
 (add-to-list 'load-path "~/lisp/remember")
