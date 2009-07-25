@@ -1,9 +1,10 @@
+(server-start)
+
 ;;Auto save drives me crazy
 (setq auto-save-interval '0)
 
 ;;Org-Mode
 (add-to-list 'load-path "~/lisp/org")
-(load "~/lisp/org/org.el")
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -27,7 +28,7 @@
 (setq org-feed-alist
       '(("ReQall"
 	 "http://www.reqall.com/user/feeds/rss/3b5e4c0dae44c665b26d206bddbdc67e956150b2"
-	 "~/org/feeds.org" "ReQall Entries")))
+	 "~/org/refile.org" "ReQall Entries")))
 
 ;;IDO mode thing
 (require 'ido)
@@ -35,13 +36,17 @@
 
 ;;;  Load Org Remember Stuff
 (add-to-list 'load-path "~/lisp/remember")
-(org-remember-insinuate)
+(require 'remember)
+
+;;  Trying random things to see if I can unbreak remember
+(setq org-directory "~/org/")
+(setq org-default-notes-file "~/org/refile.org")
+(setq remember-annotation-functions '(org-remember-annotation))
+(setq remember-handler-functions '(org-remember-handler))
+(add-hook 'remember-mode-hook 'org-remember-apply-template)
 
 ;; I use C-M-r to start org-remember
 (global-set-key (kbd "C-M-r") 'org-remember)
-
-;; C-c C-c stores the note immediately
-(setq org-remember-store-without-prompt t)
 
 ;; I don't use this -- but set it in case I forget to specify a location in a future template
 (setq org-remember-default-headline "Tasks")
@@ -49,7 +54,7 @@
 ;; 3 remember templates for TODO tasks, Notes, and Phone calls
 (setq org-remember-templates (quote (("todo" ?t "* TODO %?
   %u
-  %a" "~/org/tasks.org" bottom nil)
+  %a" nil bottom nil)
                                      ("note" ?n "* %?                                        :NOTE:
   %u
   %a" nil bottom nil)
@@ -57,13 +62,12 @@
   Contact Info: %a
   %u
   :CLOCK-IN:
-  %?" "~/org/phone.org" bottom nil))))
+  %?" nil bottom nil))))
 
 ;;Word wrap toggling
 (global-set-key [f9] 'toggle-truncate-lines)
 
 ;;Remove mess from the top of the screen
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
@@ -158,3 +162,15 @@ eyes are weary."
 )
 
 
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(initial-scratch-message nil))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
