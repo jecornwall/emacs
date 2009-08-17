@@ -204,6 +204,9 @@ eyes are weary."
       (w32-restore-frame)))
 
   (global-set-key [f11] 'w32-cycle-state)
+
+  ;;Powershell support
+  (autoload 'powershell "powershell" "Run powershell as a shell within emacs." t) 
 )
 
 
