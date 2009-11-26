@@ -94,12 +94,6 @@ eyes are weary."
 
 ;;Stuff for windows (only)
 (when (eq system-type 'windows-nt)
-  ;;Printing via Ghost Script
-  (setenv "GS_LIB" "C:\\Program Files\\GS\\gs8.64\\lib;C:\\Program Files\\GS\\gs8.64\\fonts")
-  (setq ps-lpr-command "C:\\Program Files\\gs\\gs8.64\\bin\\gswin32c.exe")
-  (setq ps-lpr-switches '("-q" "-dNOPAUSE" "-dBATCH" "-sDEVICE=mswinpr2"))
-  (setq ps-printer-name t)
-	
   ;;Spelling program
   (if (file-accessible-directory-p "C:\\Program Files\\Aspell\\bin\\") 
       (setq-default ispell-program-name "C:\\Program Files\\Aspell\\bin\\aspell.exe")
@@ -108,29 +102,8 @@ eyes are weary."
 
   (defvar *w32-window-state* 'restored)
 
-  ;;Maximise frame
-  (defun w32-maximize-frame ()
-    "Maximize the current frame"
-    (interactive)
-    (w32-send-sys-command 61488)
-    (setq *w32-window-state* 'maximised))
-
-  ;;Restore the current frame
-  (defun w32-restore-frame ()
-    "Restore the current frame"
-    (interactive)
-    (w32-send-sys-command 61728)
-    (setq *w32-window-state* 'restored))
- 
-  (defun w32-cycle-state ()
-    (interactive)
-    (if (eq *w32-window-state* 'restored)
-	(w32-maximize-frame)
-      (w32-restore-frame)))
-
-  (global-set-key [f11] 'w32-cycle-state)
-
   ;;Powershell support
+  (load "~/.emacs.d/powershell.el")
   (autoload 'powershell "powershell" "Run powershell as a shell within emacs." t) 
 )
 
