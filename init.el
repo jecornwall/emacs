@@ -1,15 +1,23 @@
+(require 'server)
+(when (and (= emacs-major-version 23) (equal window-system 'w32))
+  (defun server-ensure-safe-dir (dir) "Noop" t)) ; Suppress error "directory
+                                                 ; ~/.emacs.d/server is unsafe"
+                                                 ; on windows.
 (server-start)
 
 ;;I don't need native backups; I'm using GIT
 (setq make-backup-files nil)
 
-;;Auto save drives me crazy
-(setq auto-save-interval '0)
+;;Visual line mode means word wrapping isn't ugly
+(global-visual-line-mode 1)
 
 ;Haskell
-(load "~/lisp/haskell-mode/haskell-site-file")
+(load "~/.emacs.d/haskell-mode/haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+
+;;Auto save drives me crazy
+(setq auto-save-interval '0)
 
 ;Orgmode
 (load "~/.emacs.d/org-init.el")
@@ -79,6 +87,10 @@ eyes are weary."
 ;;f7 is made for spell checking, and that's just what it'll do
 (global-set-key [f7] 'ispell)
 (setq ispell-dictionary "british")
+
+;;Font setting
+ (set-default-font
+     "-outline-Consolas-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1")
 
 ;;Stuff for windows (only)
 (when (eq system-type 'windows-nt)
