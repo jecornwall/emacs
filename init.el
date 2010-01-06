@@ -46,6 +46,14 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 
+;; Keys for regexing
+(global-set-key "\M-r" 'isearch-backward-regexp)
+(global-set-key "\M-s" 'isearch-forward-regexp)
+(defalias 'qrr 'query-replace-regexp)
+
+;;Keyboard macro awesome key
+(global-set-key [f5] 'call-last-kbd-macro)
+
 ;; recentf stuff, for recently accessed files
 (require 'recentf)
 (recentf-mode 1)
@@ -92,6 +100,12 @@ eyes are weary."
  (set-default-font
      "-outline-Consolas-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1")
 
+;;ediff should split horizontally when the windows get to a certain size
+(setq ediff-split-window-function (lambda (&optional arg)
+				    (if (> (frame-width) 150)
+					(split-window-horizontally arg)
+				      (split-window-vertically arg))))
+
 ;;Stuff for windows (only)
 (when (eq system-type 'windows-nt)
   ;;Spelling program
@@ -107,6 +121,17 @@ eyes are weary."
   (autoload 'powershell "powershell" "Run powershell as a shell within emacs." t) 
 )
 
+; Install mode-compile to give friendlier compiling support!
+(autoload 'mode-compile "~/.emacs.d/mode-compile.el"
+   "Command to compile current buffer file based on the major mode" t)
+(global-set-key "\C-c\C-c" 'mode-compile)
+(autoload 'mode-compile-kill "mode-compile"
+ "Command to kill a compilation launched by `mode-compile'" t)
+(global-set-key "\C-c\C-k" 'mode-compile-kil)
+
+;; ri binding
+(setq ri-ruby-script "~/.emacs.d/ri-emacs.rb")
+(autoload 'ri "~/.emacs.d/ri-ruby.el" nil t)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
